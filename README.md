@@ -1,1 +1,3 @@
-/Users/trisha/Desktop/notion/obsidian_git/nsu/Сети/Семинары.md
+# Курс сетевых технологий 2025
+2 курс
+
