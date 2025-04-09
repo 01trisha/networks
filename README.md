@@ -1,2 +1,1 @@
-# networks
-Сетевые технологии НГУ
+/Users/trisha/Desktop/notion/obsidian_git/nsu/Сети/Семинары.md
