@@ -18,7 +18,9 @@ public class ServiceLoader{
             String line;
             while ((line = reader.readLine()) != null){
                 line = line.trim();
-                if (line.startsWith("#") || line.isEmpty()) continue;
+                if (line.startsWith("#") || line.isEmpty()){
+                    continue;
+                }
 
                 String[] parts = line.split("\\s+");
                 if (parts.length >= 2){

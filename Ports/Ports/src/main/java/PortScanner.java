@@ -17,7 +17,7 @@ public class PortScanner{
                 2 - сканировать диапазон портов
                 0 - выйти
                 
-                Ваш вариант:""");
+                Ваш вариант: """);
 
         int mode = scanner.nextInt();
 

@@ -67,12 +67,10 @@ public class MultiScanner{
         openPorts.sort(Comparator.comparingInt(PortResult::getPort));
 
         System.out.println("\nОткрытые порты:");
-        openPorts.forEach(port ->
-                System.out.printf("Порт %d: %s%n", port.getPort(), port.getService())
+        openPorts.forEach(port -> System.out.printf("Порт %d: %s%n", port.getPort(), port.getService())
         );
 
-        System.out.printf("\nНайдено открытых портов: %d из %d%n",
-                openPorts.size(), totalPorts);
+        System.out.printf("\nНайдено открытых портов: %d из %d%n", openPorts.size(), totalPorts);
     }
 
     private static class PortResult{
