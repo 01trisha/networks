@@ -2,15 +2,15 @@ package scanner;
 
 import static java.lang.Thread.sleep;
 
-public class SingleScanner {
+public class SingleScanner{
     private final ServiceLoader serviceLoader;
 
-    public SingleScanner(ServiceLoader serviceLoader) {
+    public SingleScanner(ServiceLoader serviceLoader){
         this.serviceLoader = serviceLoader;
     }
 
     public void scan(int port){
-       try {
+       try{
            boolean isOpen = CheckPort.isPortOpen("localhost", port);
            String service = serviceLoader.getServiceName(port);
            System.out.printf("Порт %d: %s, служба: %s%n", port, isOpen ? "открыт" : "закрыт", service);
