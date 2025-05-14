@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class MultiScanner{
-    private static final int THREAD_POOL_SIZE = 20;
+    private static final int THREAD_POOL_SIZE = 200;
     private final ServiceLoader serviceLoader;
 
     public MultiScanner(ServiceLoader serviceLoader){
@@ -14,7 +14,7 @@ public class MultiScanner{
     public void scan(int startPort, int endPort){
         try{
             validatePortRange(startPort, endPort);
-            System.out.println("Сканирование портов " + startPort + "-" + endPort + "...");
+            System.out.println("Сканирование портов " + startPort + "-" + endPort);
 
             ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
             List<Future<PortResult>> futures = new ArrayList<>();
