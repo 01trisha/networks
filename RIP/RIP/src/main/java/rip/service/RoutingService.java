@@ -21,6 +21,21 @@ public class RoutingService {
                 new RoutingTableEntry(neighbor.getName(), 1, neighbor));
     }
 
+    public void handleDisconnection(Router router, Router disconnectedNeighbor) {
+        router.getRoutingTable().remove(disconnectedNeighbor.getName());
+
+
+        //помечаем как недостижимые все маршруты через этого соседа
+        for (RoutingTableEntry entry : router.getRoutingTable().values()) {
+            if (disconnectedNeighbor.equals(entry.getNextHop())) {
+                entry.setMetric(INFINITY);
+                entry.setNextHop(null);
+            }
+        }
+
+        sendUpdates(router);
+    }
+
     public void sendUpdates(Router router) {
         Map<String, Integer> update = prepareUpdate(router);
         for (Router neighbor : router.getNeighbors()) {
@@ -72,12 +87,23 @@ public class RoutingService {
             }
         } else {
             if (newMetric < currentEntry.getMetric()) {
+                // Найден более короткий путь - заменяем
                 currentEntry.setMetric(newMetric);
                 currentEntry.setNextHop(sender);
-            } else if (currentEntry.getNextHop() == sender && newMetric != currentEntry.getMetric()) {
-                currentEntry.setMetric(newMetric);
+            }
+            // Если метрика такая же, но от другого соседа - сохраняем первый найденный
+            // (в реальных реализациях может быть выбор по другим критериям)
+            else if (newMetric == currentEntry.getMetric() &&
+                    currentEntry.getNextHop() == null) {
+                currentEntry.setNextHop(sender);
+            }
+            else if (currentEntry.getNextHop() == sender) {
+                // Обновление существующего пути
                 if (newMetric >= INFINITY) {
+                    currentEntry.setMetric(INFINITY);
                     currentEntry.setNextHop(null);
+                } else {
+                    currentEntry.setMetric(newMetric);
                 }
             }
         }

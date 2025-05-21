@@ -5,7 +5,7 @@ import rip.service.RoutingService;
 import java.util.ArrayList;
 import java.util.List;
 
-// Сеть маршрутизаторов
+//cеть маршрутизаторов
 public class Network {
     private final List<Router> routers = new ArrayList<>();
     private final RoutingService routingService;
@@ -38,16 +38,35 @@ public class Network {
     }
 
     public void printAllRoutingTables() {
-        routers.forEach(router -> {
+        for (Router router : routers) {
             System.out.println("Routing table for " + router.getName() + ":");
-            router.getRoutingTable().values().forEach(entry -> {
+            System.out.println("Destination\tMetric\tNext Hop");
+
+            for (RoutingTableEntry entry : router.getRoutingTable().values()) {
+                String nextHopName = "-";
+                if (entry.getNextHop() != null) {
+                    nextHopName = entry.getNextHop().getName();
+                }
+
                 System.out.printf("%-10s %-5d %s%n",
                         entry.getDestination(),
                         entry.getMetric(),
-                        entry.getNextHop() == null ? "-" : entry.getNextHop().getName());
-            });
+                        nextHopName);
+            }
             System.out.println();
-        });
+        }
+    }
+
+    public void disconnectRouters(String name1, String name2) {
+        Router r1 = findRouter(name1);
+        Router r2 = findRouter(name2);
+        if (r1 != null && r2 != null) {
+            r1.getNeighbors().remove(r2);
+            r2.getNeighbors().remove(r1);
+
+            routingService.handleDisconnection(r1, r2);
+            routingService.handleDisconnection(r2, r1);
+        }
     }
 
     public void shutdownAll() {
