@@ -18,24 +18,40 @@ public class Main {
         network.connectRouters("R3", "R4");
         network.connectRouters("R1", "R4");
 
-        System.out.println("Initial routing tables:");
+        System.out.println("начальная таблица:");
         network.printAllRoutingTables();
 
-        System.out.println("Waiting for convergence (15 seconds)...");
-        TimeUnit.SECONDS.sleep(15);
+        System.out.println("ждем 20 секунд");
+        TimeUnit.SECONDS.sleep(20);
 
-        System.out.println("Routing tables after convergence:");
+        System.out.println("итоговая таблица после роутинга:");
         network.printAllRoutingTables();
 
-        System.out.println("Disconnecting R1-R4...");
+        System.out.println("отключаем связь R1 - R4");
         network.disconnectRouters("R1", "R4");
 
-        System.out.println("Waiting after disconnection (15 seconds)...");
-        TimeUnit.SECONDS.sleep(15);
+        System.out.println("ждем 20 секунд");
+        TimeUnit.SECONDS.sleep(20);
 
-        System.out.println("Final routing tables:");
+        System.out.println("финальная таблица:");
         network.printAllRoutingTables();
 
         network.shutdownAll();
+
+//        RoutingService routingService1 = new RoutingService();
+//        Network network2 = new Network(routingService);
+//
+//        network2.addRouter("R1");
+//        network2.addRouter("R2");
+//        network2.addRouter("R3");
+//        network2.addRouter("R4");
+//        network2.addRouter("R5");
+//
+//        network2.connectRouters("R1", "R2");
+//        network2.connectRouters("R2", "R3");
+//        network2.connectRouters("R3", "R4");
+//        network.connectRouters("R4", "R5");
+//        network2.connectRouters("R2", "R4");
+//
     }
 }

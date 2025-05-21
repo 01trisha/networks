@@ -34,7 +34,6 @@ public class Router {
         routingService.receiveUpdate(this, sender, receivedTable);
     }
 
-    // Геттеры
     public String getName() { return name; }
     public Map<String, RoutingTableEntry> getRoutingTable() { return routingTable; }
     public List<Router> getNeighbors() { return neighbors; }

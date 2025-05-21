@@ -11,7 +11,6 @@ public class RoutingTableEntry {
         this.nextHop = nextHop;
     }
 
-    // Геттеры и сеттеры
     public String getDestination() { return destination; }
     public int getMetric() { return metric; }
     public void setMetric(int metric) { this.metric = metric; }

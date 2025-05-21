@@ -39,8 +39,8 @@ public class Network {
 
     public void printAllRoutingTables() {
         for (Router router : routers) {
-            System.out.println("Routing table for " + router.getName() + ":");
-            System.out.println("Destination\tMetric\tNext Hop");
+            System.out.println("таблица маршрутизации для " + router.getName() + ":");
+            System.out.println("роутер \tметрица\tследующий прыжок");
 
             for (RoutingTableEntry entry : router.getRoutingTable().values()) {
                 String nextHopName = "-";
