@@ -12,11 +12,14 @@ public class Main {
         network.addRouter("R2");
         network.addRouter("R3");
         network.addRouter("R4");
+        network.addRouter("R5");
 
         network.connectRouters("R1", "R2");
         network.connectRouters("R2", "R3");
         network.connectRouters("R3", "R4");
         network.connectRouters("R1", "R4");
+        network.connectRouters("R4", "R5");
+        network.connectRouters("R2", "R4");
 
         System.out.println("начальная таблица:");
         network.printAllRoutingTables();
@@ -27,14 +30,14 @@ public class Main {
         System.out.println("итоговая таблица после роутинга:");
         network.printAllRoutingTables();
 
-        System.out.println("отключаем связь R1 - R4");
-        network.disconnectRouters("R1", "R4");
-
-        System.out.println("ждем 20 секунд");
-        TimeUnit.SECONDS.sleep(20);
-
-        System.out.println("финальная таблица:");
-        network.printAllRoutingTables();
+//        System.out.println("отключаем связь R1 - R4");
+//        network.disconnectRouters("R1", "R4");
+//
+//        System.out.println("ждем 20 секунд");
+//        TimeUnit.SECONDS.sleep(20);
+//
+//        System.out.println("финальная таблица:");
+//        network.printAllRoutingTables();
 
         network.shutdownAll();
 
