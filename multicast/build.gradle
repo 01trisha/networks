@@ -1,19 +1,38 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
+
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass = 'org.example.Main'
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.example.Main' // Укажите ваш главный класс
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveFileName = 'multicast-app.jar'
+}
 
 test {
     useJUnitPlatform()
 }
+
+
+
