@@ -6,33 +6,51 @@ plugins {
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
+// ЯВНОЕ УКАЗАНИЕ ВЕРСИИ JAVA
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // Добавьте здесь ваши runtime зависимости, если они есть
+    // implementation 'some:library:1.0.0'
 }
 
 application {
     mainClass = 'org.example.Main'
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
 jar {
     manifest {
-        attributes 'Main-Class': 'org.example.Main' // Укажите ваш главный класс
+        attributes(
+                'Main-Class': 'org.example.Main',
+                'Implementation-Version': archiveVersion.get()
+        )
     }
+
+    // Создание fat JAR со всеми зависимостями
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveFileName = 'multicast-app.jar'
+    archiveFileName = 'multicast-app2.jar'
 }
 
 test {
     useJUnitPlatform()
 }
 
-
-
+// Опционально: задача для быстрой сборки JAR
+tasks.register('buildJar') {
+    dependsOn 'jar'
+    group = 'build'
+    description = 'Builds the executable JAR file'
+}

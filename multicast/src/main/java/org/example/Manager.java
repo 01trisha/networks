@@ -109,6 +109,7 @@ public class Manager {
                     continue;
                 }
 
+
                 String messageType = parts[0];
                 String remoteIp = parts[1];
                 String remoteProcessID = parts[2];
@@ -209,6 +210,38 @@ public class Manager {
     }
 
     private LocalEndpoint resolveLocalEndpoint(boolean useIPv6) throws SocketException {
+        if (useIPv6) {
+            try {
+                NetworkInterface en0 = NetworkInterface.getByName("en0");
+                if (en0 != null && en0.isUp() && en0.supportsMulticast() && !en0.isLoopback()) {
+                    Enumeration<InetAddress> addresses = en0.getInetAddresses();
+                    InetAddress fallback = null;
+                    while (addresses.hasMoreElements()) {
+                        InetAddress address = addresses.nextElement();
+                        if (address.isAnyLocalAddress() || address.isLoopbackAddress()) {
+                            continue;
+                        }
+
+                        if (address instanceof Inet6Address) {
+                            if (!address.isLinkLocalAddress()) {
+                                System.out.println("Using en0 with global IPv6 address: " + address.getHostAddress());
+                                return new LocalEndpoint(en0, address);
+                            }
+                            if (fallback == null) {
+                                fallback = address;
+                            }
+                        }
+                    }
+                    if (fallback != null) {
+                        System.out.println("Using en0 with link-local IPv6 address: " + fallback.getHostAddress());
+                        return new LocalEndpoint(en0, fallback);
+                    }
+                }
+            } catch (SocketException e) {
+                System.err.println("Failed to get en0 interface: " + e.getMessage());
+            }
+        }
+
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
         while (interfaces.hasMoreElements()) {
             NetworkInterface networkInterface = interfaces.nextElement();
