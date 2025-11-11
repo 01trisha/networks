@@ -11,4 +11,4 @@
 
 **3 курс**
 - **Lab1. [Multicast](https://github.com/01trisha/networks/tree/main/multicast) - Multicast Group**
-- **Lab2. [TCP file Uploader](https://github.com/01trisha/networks/tree/main/multicast) - TCP, Socket IO**
+- **Lab2. [TCP file Uploader](https://github.com/01trisha/networks/tree/main/tcpFileUploader) - TCP, Socket IO**
