@@ -12,3 +12,4 @@
 **3 курс**
 - **Lab1. [Multicast](https://github.com/01trisha/networks/tree/main/multicast) - Multicast Group**
 - **Lab2. [TCP file Uploader](https://github.com/01trisha/networks/tree/main/tcpFileUploader) - TCP, Socket IO**
+- **Lab3. [Places API](https://github.com/01trisha/networks/tree/main/PlacesAPI) - API, Async**
